@@ -1,0 +1,37 @@
+The following scripts are utility tools to help users perform
+operations on C-grid variables.  The basic operations involve
+calculating averages and gradients and these can be effectively
+relegated to simple but useful scripts that can be called on
+repeatedly to perform the requisite operations.  These scripts free
+the user from worrying about implementation details and allow him/her
+to focus instead on the larger picture.
+
+There are 2 main scripts:
+xop2_2d.m	Perform an operation along the x-direction
+yop2_2d.m	Perform an operation along the y-direction
+The others are either tests or printing scripts.  The script interfaces
+were deliberately made simple so as to make their use easy.  The
+scripts figure out automatically, using the array sizes as
+indicators, if  the operations performed is from cell centers to
+edges or vice versa. This simplicity has a price:
+1. The arrays must be exactly sized as
+     M    x  N      for p-variables
+    (M+1) x  N      for u-variables
+     M    x (N+1)   for v-variables
+    (M+1) x (N+1)   for z-variables (vorticity defined at cell corners)
+2. Operations from cell edges to cell centers visit all variables of 
+   the output arrays.
+3. Operations from cell centers to cell edges leave the boundary edges
+   untouched. These must be given values using the problem's boundary conditions.
+
+
+setmatrices.m   Sets up the matrices on a small C-grid for testing
+prettyprint2.m  utility routine to print C-grid 1D variables in cgopstest.m
+prettyprint4.m  utility routine to print C-grid 2D variables in cgopstest.m
+printbars.m     utility routine to mark C-grid corners in cgopstest.m
+cgopstest.m     The actual test of performing averages in the x and y-directions
+		The input  arrays are fp,fu,fv,fz and are defined on p,u,v,z points
+		The output arrays are gp,gu,gv,gz and are defined on p,u,v,z points
+		The output arrays are initialed with the value -9.99 to highlight 
+		"untouched" values.
+
